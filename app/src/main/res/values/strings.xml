@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">Firebase</string>
+    <string name="app_name">Movie Ticket Booking</string>
+    <string name="login_title">Movie Ticket Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="register_text">Don\'t have an account? Register</string>
+    <string name="register_title">Create Account</string>
+    <string name="full_name">Full Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="register_button">Register</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="select_showtime">Select Showtime:</string>
+    <string name="enter_seat">Enter Seat (e.g., A1, B5)</string>
+    <string name="price">Price: $10.00</string>
+    <string name="confirm_booking">Confirm Booking</string>
+    <string name="book_now">Book Now</string>
+    <string name="rating_prefix">Rating: </string>
 </resources>
