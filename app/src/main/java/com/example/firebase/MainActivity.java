@@ -2,6 +2,7 @@ package com.example.firebase;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +14,12 @@ import com.example.firebase.models.Movie;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMovieClickListener {
 
@@ -40,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
             return;
         }
 
+        // --- PHẦN LẤY FCM TOKEN ---
+        getAndSaveFCMToken();
+
         binding.btnLogout.setOnClickListener(v -> {
             mAuth.signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -48,6 +55,28 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
 
         setupRecyclerView();
         loadMovies();
+    }
+
+    private void getAndSaveFCMToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("FCM", "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+
+                    // Lấy token thành công
+                    String token = task.getResult();
+                    String userId = mAuth.getCurrentUser().getUid();
+
+                    // Lưu token vào Firestore của User này
+                    Map<String, Object> tokenData = new HashMap<>();
+                    tokenData.put("fcmToken", token);
+
+                    db.collection("users").document(userId)
+                            .update(tokenData)
+                            .addOnSuccessListener(aVoid -> Log.d("FCM", "Token updated successfully"));
+                });
     }
 
     private void setupRecyclerView() {
@@ -71,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
                         adapter.notifyDataSetChanged();
                         
                         if (movieList.isEmpty()) {
-                            // Add some dummy data if collection is empty for testing
                             addDummyData();
                         }
                     } else {
