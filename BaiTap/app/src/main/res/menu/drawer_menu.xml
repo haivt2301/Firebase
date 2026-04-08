@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_recent"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Recent" />
+        <item
+            android:id="@+id/nav_offline"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Offline" />
+        <item
+            android:id="@+id/nav_bin"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Bin" />
+    </group>
+    <item android:title="Others">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_launcher_foreground"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_launcher_foreground"
+                android:title="Help &amp; feedback" />
+        </menu>
+    </item>
+</menu>
